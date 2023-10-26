@@ -1,3 +1,4 @@
+import { LinkButton } from '@/components/Button'
 import { Button } from '@/components/ui/button'
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <p className='sm:w-[50%] w-[90%] text-center text-xl'>
         Crea tu propio articulo, solo grabando una nota de voz. Nos encargamos de entregarte un articulo de calidad listo para publicar.
       </p>
-      <Button className='text-xl px-12 py-6'>Comenzar</Button>
+      <LinkButton link='/login'>Comenzar</LinkButton>
     </main>
   )
 }
