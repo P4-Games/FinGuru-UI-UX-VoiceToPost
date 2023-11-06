@@ -7,7 +7,7 @@ export default function NoteSection({ note }: { note: string }) {
   };
   return (
     <section className="flex flex-col gap-6 w-full justify-center align-middle">
-      <div className="border border-gray-500 p-8 max-w-3xl w-full h-[50vh] overflow-y-auto mx-auto">
+      <div className="border border-gray-500 p-8 max-w-3xl w-full h-[40vh] overflow-y-auto mx-auto">
         <p>{note ? note : "..."}</p>
       </div>
       <div className="flex justify-center">
