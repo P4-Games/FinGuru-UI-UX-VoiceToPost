@@ -16,7 +16,7 @@ export default function Page (){
         e.preventDefault();
         const data = await login(user, password, setMessage, setIsLoading)
         if(data.jwt_token){
-            saveToken(data.jwt_token)
+            saveToken(data.jwt_token, user)
             router.push('/note-record')
         }
     }
@@ -35,7 +35,7 @@ export default function Page (){
                     Ingresar o crear cuenta
                 </h1>
                 <p className='sm:w-[50%] w-[100%] text-left sm:text-center text-xl'>
-                    Ingrese su usuario y contraseña de <a href="https://www.fin.guru/">fin.guru</a>
+                    Ingrese su nombre y contraseña de <a href="https://www.fin.guru/">fin.guru</a>
                 </p>
                 <form onSubmit={(e) => handleSubmit(e)} method="POST" encType="multipart/form-data" className="flex flex-col items-center justify-center w-full gap-6">
                     <Input className='text-xl px-12 py-6' autoComplete="do-not-autocomplete" placeholder='Usuario' name="username" id="username" value={user} onChange={handleOnChangeUser}/>
