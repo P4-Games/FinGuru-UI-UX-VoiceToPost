@@ -7,6 +7,7 @@ export type Article = {
     title: string;
     visits: number | string;
     link: string;
+    author?: string;
 }
 
 interface ArticleProps extends Article {

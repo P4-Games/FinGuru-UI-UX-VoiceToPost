@@ -1,27 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { Article } from '@/components/Article'
+import { Articles } from '@/components/Articles'
 import { Navbar } from '@/components/Navbar'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {
-  const DUMMY_ARTICLES: Article[] = [
-    {
-      title: "IA y nuevos paradigmas en la atribución de responsabilidad",
-      link: "",
-      visits: "1.3k",
-    },
-    {
-      title: "Hacia el abismo",
-      link: "",
-      visits: "13k",
-    },
-    {
-      title: "Internet de las Cosas y la transformación digital en las empresas posmodernas",
-      link: "",
-      visits: "10",
-    }
-  ]
-
   return (
     <>
       <Navbar />
@@ -40,12 +23,7 @@ export default function Home() {
           </div>
           <img src="finguru_token.png" alt='finguru token' className='w-[80px] h-[80px]'/>
         </section>
-        {/* WIP */}
-        {
-          DUMMY_ARTICLES.map((article, index) => (
-            <Article key={index} {...article} />
-          ))
-        }
+        <Articles />
       </main>
     </>
   )
