@@ -38,7 +38,7 @@ export default function Page (){
                     Ingrese su nombre y contraseña de <a href="https://www.fin.guru/">fin.guru</a>
                 </p>
                 <form onSubmit={(e) => handleSubmit(e)} method="POST" encType="multipart/form-data" className="flex flex-col items-center justify-center w-full gap-6">
-                    <Input className='text-xl px-12 py-6' autoComplete="do-not-autocomplete" placeholder='Usuario' name="username" id="username" value={user} onChange={handleOnChangeUser}/>
+                    <Input className='text-xl px-12 py-6' autoComplete="do-not-autocomplete" placeholder='Nombre' name="username" id="username" value={user} onChange={handleOnChangeUser}/>
                     <Input className='text-xl px-12 py-6' placeholder='Contraseña' name="password" type="password" id="password" value={password} onChange={handleOnChangePass}/>
                     <p className='text-xl text-red-500'>{message ?? ""}</p>
                     <Button className='text-xl px-12 py-6 w-full' type="submit" disabled={isLoading}>{
