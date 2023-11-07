@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 export const Navbar = () => {
     const router = useRouter();
     const [username, setUsername] = React.useState<string>('')
-    
+    const [showArticles, setShowArticles] = React.useState<boolean>(false);
+
     const handleLogout = ()=>{
         logout();
         router.push('/')
@@ -28,6 +29,14 @@ export const Navbar = () => {
         }else{
             router.push('/')
         }
+
+        if(typeof window !== 'undefined'){
+            if(window.location.pathname === '/note-record'){
+                setShowArticles(false)
+            }else{
+                setShowArticles(true)
+            }
+        }
     }, []);
 
     return (
@@ -39,7 +48,7 @@ export const Navbar = () => {
             </h3>
             <section className="flex flex-row items-center gap-6">
                 {
-                    window && window.location.pathname === '/note-record' ? (
+                    showArticles ? (
                         <button className="flex flex-row items-center" onClick={()=>{
                             router.push('/articles')
                         }}>

@@ -10,7 +10,7 @@ export default function Page (){
     const [user, setUser] = React.useState<string>('')
     const [password, setPassword] = React.useState<string>('')
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
-    const [message, setMessage] = React.useState<string>('')
+    const [message, setMessage] = React.useState<string>('');
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
