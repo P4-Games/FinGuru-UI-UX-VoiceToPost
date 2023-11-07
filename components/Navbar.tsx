@@ -48,7 +48,7 @@ export const Navbar = () => {
             </h3>
             <section className="flex flex-row items-center gap-6">
                 {
-                    showArticles ? (
+                    !showArticles ? (
                         <button className="flex flex-row items-center" onClick={()=>{
                             router.push('/articles')
                         }}>
