@@ -1,6 +1,7 @@
 
-export const saveToken = (token: string) => {
+export const saveToken = (token: string, username: string) => {
     localStorage.setItem("token", token);
+    localStorage.setItem("username", username);
 }
 
 export const isLoggedIn = () => {
@@ -10,10 +11,15 @@ export const isLoggedIn = () => {
 
 export const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
 }
 
 export const getToken = () => {
     return localStorage.getItem("token");
+}
+
+export const getUsername = (): string => {
+    return localStorage.getItem("username") ?? "";
 }
 
 type LoginResponse = {
