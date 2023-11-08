@@ -22,9 +22,6 @@ export const Navbar = () => {
             let token = getToken();
             if(token) {
                 const user = getUsername();
-                getUserDetails(token).then((user)=>{
-                    console.log(user)
-                })
                 if(user){
                     setUsername(user)
                 }else{
