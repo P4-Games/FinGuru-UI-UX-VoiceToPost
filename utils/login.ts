@@ -112,13 +112,16 @@ export const getUserDetails = async (token: string): Promise<UserDetailsResponse
     }
 
     const URL = "https://fin.guru?rest_route=/wp/v2/users/me";
-    
-    const options = {
+
+    const options: RequestInit = {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            "Accept": "*/*",
             "Authorization": `Bearer ${token}`,
+            "Origin": "http://localhost:3000",
         },
+        mode: "cors",
     };
 
     const query = await fetch(URL, options);

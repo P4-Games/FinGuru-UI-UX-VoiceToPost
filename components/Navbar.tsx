@@ -14,11 +14,17 @@ export const Navbar = () => {
         router.push('/')
     }
 
+    const handleOpenArticles = () => router.push('/articles')
+    const handleOpenNoteRecord = () => router.push('/note-record')
+
     useEffect(() => {
         if(isLoggedIn()){
             let token = getToken();
             if(token) {
                 const user = getUsername();
+                getUserDetails(token).then((user)=>{
+                    console.log(user)
+                })
                 if(user){
                     setUsername(user)
                 }else{
@@ -37,27 +43,21 @@ export const Navbar = () => {
                 setShowArticles(true)
             }
         }
-    }, []);
+    }, [router]);
 
     return (
         <nav className="w-full bg-[#eee] flex flex-row items-center justify-between px-6 py-4 mb-6">
-            <h3 className='text-xl sm:text-3xl font-medium text-left sm:text-center' onClick={()=>{
-                router.push('/note-record')
-            }}>
+            <h3 className='text-xl sm:text-3xl font-medium text-left sm:text-center' onClick={handleOpenNoteRecord} onKeyDown={e => console.log(e)}>
                 {username?.split(" ")?.[0] ?? ""} 
             </h3>
             <section className="flex flex-row items-center gap-6">
                 {
                     !showArticles ? (
-                        <button className="flex flex-row items-center" onClick={()=>{
-                            router.push('/articles')
-                        }}>
+                        <button className="flex flex-row items-center" onClick={handleOpenArticles}>
                             Mis artículos
                         </button>
                     ) : (
-                        <button className="flex flex-row items-center" onClick={()=>{
-                            router.push('/note-record')
-                        }}>
+                        <button className="flex flex-row items-center" onClick={handleOpenNoteRecord}>
                             Grabar nota
                         </button>
                     )
