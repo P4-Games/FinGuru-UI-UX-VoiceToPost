@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import AudioRecorder from "@/components/AudioRecorder";
 import NoteSection from "@/components/NoteSection";
-import { Navbar } from "@/components/Navbar";
+import { Navbar } from '@/components/Navbar'
 
 export default function NoteRecord() {
   const [note, setNote] = useState("");
