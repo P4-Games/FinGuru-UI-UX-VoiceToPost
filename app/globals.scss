@@ -87,3 +87,113 @@ p, input, textarea{
 button{
   font-family: "Clash Display", sans-serif;
 }
+
+.tiptap_form > div{
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  max-width: 3xl;
+  width: calc(100% - 60px);
+  padding: 15px;
+  border-radius: 8px;
+  height: 40vh;
+  overflow-y: auto;
+  margin: auto 30px auto 30px;
+}
+
+.tiptap_form .is-active{
+  background-color: #171717;
+  color: #fff;
+}
+
+.tiptap_formMenu{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  margin: 0 30px 0 30px;
+  margin-bottom: 10px;
+}
+
+.tiptap_formMenu > button{
+  border: 2px solid #171717;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.tiptap_formMenu ~ div > div {
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  max-width: 3xl;
+  width: calc(100% - 60px);
+  padding: 15px;
+  border-radius: 8px;
+  height: 40vh;
+  overflow-y: auto;
+  margin: auto 30px auto 30px;
+  
+  & h1{
+    font-size: 1.7rem; 
+    font-weight: 700;
+  }
+  & h2{
+    font-size: 1.5rem; 
+    font-weight: 700;
+  }
+
+  & h3{
+    font-size: 1.3rem; 
+    font-weight: 700;
+  }
+
+  & p{
+    font-size: 1.1rem; 
+    font-weight: 400;
+  }
+
+  & a{
+    font-size: 1.1rem; 
+    font-weight: 400;
+    color: #171717;
+
+    &:hover, &:visited{
+      color: #171717;
+    }
+  }
+
+  & img{
+    max-width: 100%;
+    height: auto;
+  }
+
+  & ul{
+    list-style: disc;
+    padding-left: 20px;
+  }
+
+  & ol{
+    list-style: decimal;
+    padding-left: 20px;
+  }
+
+  & li{
+    font-size: 1.1rem; 
+    font-weight: 400;
+  }
+
+  & blockquote{
+    border-left: 4px solid #171717;
+    padding-left: 10px;
+    margin-left: 10px;
+  }
+
+  & pre{
+    background-color: #171717;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: monospace;
+    overflow-x: auto;
+  }
+
+}

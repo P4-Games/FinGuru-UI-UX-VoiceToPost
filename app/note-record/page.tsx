@@ -12,7 +12,7 @@ export default function NoteRecord() {
       <Navbar />
       <main className="w-full h-full flex flex-col items-center">
         <AudioRecorder callBack={setNote} />
-        <NoteSection note={note} />
+        <NoteSection setNote={setNote} note={note} />
       </main>
     </>
   );

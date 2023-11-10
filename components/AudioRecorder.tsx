@@ -67,17 +67,24 @@ export default function AudioRecorder({
             }
 
             const formData = new FormData();
-            formData.append("audio", wavBlob, "recorded-note.wav");
-            console.log(formData.get("audio"));
+            formData.append("file", wavBlob, "recorded-note.wav");
 
             // Send the formData to your backend
-            // const response = await fetch("/your-endpoint", {
-            //   method: "POST",
-            //   body: formData,
-            // });
-            // if (!response.ok) {
-            //   // Handle the error
-            // }
+            try {
+              const response = await fetch(
+                "https://finguru-back-voicetopost-qj44in647a-uc.a.run.app" +
+                  "/convert_audio",
+                {
+                  method: "POST",
+                  body: formData,
+                }
+              );
+              if (!response.ok) {
+                console.log(response);
+              }
+            } catch (err) {
+              console.log(err);
+            }
 
             //on success
             callBack(exampleNote);
