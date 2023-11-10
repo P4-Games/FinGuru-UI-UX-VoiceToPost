@@ -5,7 +5,7 @@ export const getUserArticles = async (name: string): Promise<Article[]> => {
     let res: Article[] = [];
 
     const URL = "https://www.fin.guru/wp-json"
-    const POSTS_ENDPOINT = "/wp/v2/posts"
+    const POSTS_ENDPOINT = "/wp/v2/posts?per_page=50"
     const VIEWS_ENDPOINT = "/post-views-counter/get-post-views/" //:<post_id>
 
     const posts = await fetch(URL + POSTS_ENDPOINT)

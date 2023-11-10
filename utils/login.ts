@@ -87,7 +87,7 @@ type UserDetailsResponse = {
     },
 }
 
-export const getUserDetails = async (token: string): Promise<UserDetailsResponse> => {
+export const getUsernameFromToken = async (token: string): Promise<UserDetailsResponse> => {
     let res: UserDetailsResponse = {
         id: 0,
         name: '',
