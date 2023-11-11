@@ -1,7 +1,6 @@
 "use client";
 import {
   getToken,
-  getUserDetails,
   getUsername,
   isLoggedIn,
   logout,
@@ -11,9 +10,7 @@ import { IconLogout } from "./IconLogout";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@txnlab/use-wallet";
 import { useState } from "react";
-import AppCalls from "@/components/AppCalls";
 import ConnectWallet from "@/components/ConnectWallet";
-import Transact from "@/components/Transact";
 import { Button } from "@/components/ui/button";
 import { ellipseAddress } from "@/utils/ellipseAddress";
 

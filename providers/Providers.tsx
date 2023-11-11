@@ -23,6 +23,7 @@ if (process.env.NEXT_PUBLIC_ALGOD_NETWORK === "") {
     { id: PROVIDER_ID.DEFLY, clientStatic: DeflyWalletConnect },
     { id: PROVIDER_ID.PERA, clientStatic: PeraWalletConnect },
     { id: PROVIDER_ID.DAFFI, clientStatic: DaffiWalletConnect },
+    /*
     {
       id: PROVIDER_ID.WALLETCONNECT,
       //clientStatic: WalletConnectModalSign,
@@ -36,7 +37,7 @@ if (process.env.NEXT_PUBLIC_ALGOD_NETWORK === "") {
           icons: ["https://walletconnect.com/walletconnect-logo.png"],
         },
       },
-    },
+    },*/
     // { id: PROVIDER_ID.MYALGO, clientStatic: DaffiWalletConnect },
     // If you are interested in WalletConnect v2 provider
     // refer to https://github.com/TxnLab/use-wallet for detailed integration instructions
