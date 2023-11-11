@@ -5,7 +5,7 @@ import { useWallet } from '@txnlab/use-wallet'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
 //import { FinGuruTokenClient } from '../contracts/fin_guru_token'
-import { getAlgodConfigEnvironment, getIndexerConfigEnvironment } from '../utils/network/getClientConfigs'
+//import { getAlgodConfigEnvironment, getIndexerConfigEnvironment } from '../utils/network/getClientConfigs'
 
 interface AppCallsInterface {
   openModal: boolean
@@ -15,8 +15,8 @@ interface AppCallsInterface {
 const AppCalls = ({ openModal, setModalState }: AppCallsInterface) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [contractInput, setContractInput] = useState<string>('')
-
-  const algodConfig = getAlgodConfigEnvironment()
+  
+  //const algodConfig = getAlgodConfigEnvironment()
   /*const algodClient = algokit.getAlgoClient({
     server: algodConfig.server,
     port: algodConfig.port,

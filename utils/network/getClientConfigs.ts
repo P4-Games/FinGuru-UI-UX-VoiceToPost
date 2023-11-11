@@ -1,4 +1,4 @@
-import { AlgoClientConfig, AlgoKMDConfig } from "@/interfaces/network";
+//import { AlgoClientConfig, AlgoKMDConfig } from "@/interfaces/network";
 
 export function getAlgodConfigEnvironment() {
   if (!process.env.NEXT_PUBLIC_ALGOD_SERVER) {
@@ -15,7 +15,7 @@ export function getAlgodConfigEnvironment() {
   };
 }
 
-export function getIndexerConfigEnvironment(): AlgoClientConfig {
+export function getIndexerConfigEnvironment() {
   if (!process.env.NEXT_PUBLIC_INDEXER_SERVER) {
     throw new Error('Attempt to get default algod configuration without specifying NEXT_PUBLIC_INDEXER_SERVER in the environment variables')
   }
