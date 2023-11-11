@@ -1,10 +1,5 @@
 "use client";
-import {
-  getToken,
-  getUsername,
-  isLoggedIn,
-  logout,
-} from "@/utils/login";
+import { getToken, getUsername, isLoggedIn, logout } from "@/utils/login";
 import React, { useEffect } from "react";
 import { IconLogout } from "./IconLogout";
 import { useRouter } from "next/navigation";
@@ -104,7 +99,7 @@ export const Navbar = () => {
               : "Connect Wallet"}
           </Button>
 
-          {activeAddress && (
+          {/* {activeAddress && (
             <button
               data-test-id="transactions-demo"
               className="btn m-2"
@@ -122,7 +117,7 @@ export const Navbar = () => {
             >
               Contract Interaction
             </button>
-          )}
+          )} */}
         </div>
 
         <div onClick={handleLogout} onKeyDown={(e) => e.preventDefault()}>
