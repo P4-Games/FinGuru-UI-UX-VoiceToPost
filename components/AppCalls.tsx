@@ -1,10 +1,10 @@
 import * as algokit from '@algorandfoundation/algokit-utils'
 import { TransactionSignerAccount } from '@algorandfoundation/algokit-utils/types/account'
-import { AppDetails } from '@algorandfoundation/algokit-utils/types/app-client'
+//import { AppDetails } from '@algorandfoundation/algokit-utils/types/app-client'
 import { useWallet } from '@txnlab/use-wallet'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
-import { FinGuruTokenClient } from '../contracts/fin_guru_token'
+//import { FinGuruTokenClient } from '../contracts/fin_guru_token'
 import { getAlgodConfigEnvironment, getIndexerConfigEnvironment } from '../utils/network/getClientConfigs'
 
 interface AppCallsInterface {
@@ -36,7 +36,7 @@ const AppCalls = ({ openModal, setModalState }: AppCallsInterface) => {
   const sendAppCall = async () => {
     setLoading(true)
 
-    const appDetails = {
+    /*const appDetails = {
       resolveBy: 'creatorAndName',
       sender: { signer, addr: activeAddress } as TransactionSignerAccount,
       creatorAddress: activeAddress,
@@ -66,7 +66,7 @@ const AppCalls = ({ openModal, setModalState }: AppCallsInterface) => {
       return
     })
 
-    enqueueSnackbar(`Response from the contract: ${response?.return}`, { variant: 'success' })
+    enqueueSnackbar(`Response from the contract: ${response?.return}`, { variant: 'success' })*/
     setLoading(false)
   }
 
