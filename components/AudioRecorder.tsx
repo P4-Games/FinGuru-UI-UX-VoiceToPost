@@ -4,27 +4,42 @@ import { Button } from "@/components/ui/button";
 import encodeWAV from "audiobuffer-to-wav";
 import { IconLoader2 } from "@tabler/icons-react";
 
-const exampleNote =
-  "There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum earum natus quos perspiciatis, quam nisi ipsa sint asperiores voluptates nihil deleniti. Quidem dolor numquam et possimus delectus voluptatibus placeat labore? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odit, temporibus animi aut et, sunt error dolore ab tempore totam esse iste cumque corrupti libero similique consequuntur suscipit minima, quam quos? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore saepe dolorem in veritatis debitis sapiente commodi corrupti culpa doloribus. Quidem saepe repellendus itaque sit sapiente, qui reiciendis assumenda culpa quia! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ea unde molestias quidem doloremque aut, porro voluptates eos quas eveniet, eum inventore vitae exercitationem vel accusantium. Dolorum, maxime. Unde, nesciunt?";
+const maxWidth = 100 / (5 * 60);
 
 export default function AudioRecorder({
   callBack,
-  loading,
-  setLoading,
-  message,
-  setMessage
-} : {
+}: {
   callBack: (note: string) => void;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-  message: string;
-  setMessage: (message: string) => void;
 }) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState("");
   const mediaRecorderRef = useRef<MediaRecorder | null>();
   const audioChunksRef = useRef<BlobPart[]>([]);
-  
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [barWidth, setBarWidth] = useState(0);
+
+  const startProgress = () => {
+    let timer = setInterval(() => {
+      setBarWidth((prevWidth) => {
+        if (prevWidth < 100) {
+          return prevWidth + maxWidth;
+        } else {
+          clearInterval(timer);
+          return prevWidth;
+        }
+      });
+    }, 1000);
+
+    // Stop the timer after 5 minutes
+    setTimeout(() => {
+      clearInterval(timer);
+    }, 5 * 60 * 1000);
+  };
+
+  useEffect(() => {
+    setBarWidth(0);
+  }, [loading]);
 
   const handleStartRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -56,6 +71,7 @@ export default function AudioRecorder({
   };
 
   const handleSend = async () => {
+    startProgress();
     setMessage(
       "Estamos procesando tu audio, esto puede tardar hasta 4 minutos..."
     );
@@ -90,14 +106,16 @@ export default function AudioRecorder({
             try {
               const response = await fetch(
                 "https://finguru-back-voicetopost-qj44in647a-uc.a.run.app" +
-                "/convert_audio",
+                  "/convert_audio",
                 {
                   method: "POST",
                   body: formData,
                 }
               );
               const data = await response.json();
+              setMessage("");
               setLoading(false);
+
               console.log(data);
               if (typeof data != "string") return;
               let formattedData = data?.startsWith("html")
@@ -105,13 +123,10 @@ export default function AudioRecorder({
                 : data;
               formattedData = formattedData.replace(/\n/g, "<br />");
               callBack(formattedData);
-              setLoading(false);
-              setMessage("");
             } catch (err) {
+              setMessage("Ocurrió un error al procesar el audio");
               setLoading(false);
               console.log(err);
-              setLoading(false);
-              setMessage("Ocurrió un error al procesar el audio");
             }
           });
       }
@@ -168,6 +183,14 @@ export default function AudioRecorder({
             "Enviar audio"
           )}
         </Button>
+        {loading && (
+          <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
+            <div
+              style={{ width: `${barWidth}%` }}
+              className="bg-gray-600 h-2.5 rounded-full dark:bg-gray-300"
+            ></div>
+          </div>
+        )}
         {message && <p className="font-semibold">{message}</p>}
       </div>
     </section>
