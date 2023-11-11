@@ -17,7 +17,7 @@ const Tiptap = ({note, setNote}: TiptapProps) => {
     const editor = useEditor({
         extensions: [
             BubbleMenu.configure({
-                element: document.querySelector('.tiptap_menu') as HTMLElement,
+                element: typeof document !== 'undefined' ? document.querySelector('.tiptap_menu') as HTMLElement : null,
             }),
             Color.configure({ types: [TextStyle.name, ListItem.name] }),
             TextStyle.configure({ types: [ListItem.name] } as any),
@@ -40,7 +40,7 @@ const Tiptap = ({note, setNote}: TiptapProps) => {
 
     const extensions = [
         BubbleMenu.configure({
-            element: document.querySelector('.tiptap_menu') as HTMLElement,
+            element: typeof document !== 'undefined' ? document.querySelector('.tiptap_menu') as HTMLElement : null,
         }),
         Color.configure({ types: [TextStyle.name, ListItem.name] }),
         TextStyle.configure({ types: [ListItem.name] } as any),
