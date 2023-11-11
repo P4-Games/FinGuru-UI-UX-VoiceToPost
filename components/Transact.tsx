@@ -1,9 +1,9 @@
-import * as algokit from '@algorandfoundation/algokit-utils'
+//import * as algokit from '@algorandfoundation/algokit-utils'
 import { useWallet } from '@txnlab/use-wallet'
 import algosdk from 'algosdk'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
-import { getAlgodConfigEnvironment } from '../utils/network/getClientConfigs'
+//import { getAlgodConfigEnvironment } from '../utils/network/getClientConfigs'
 
 interface TransactInterface {
   openModal: boolean
@@ -14,12 +14,12 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [receiverAddress, setReceiverAddress] = useState<string>('')
 
-  const algodConfig = getAlgodConfigEnvironment()
-  const algodClient = algokit.getAlgoClient({
+  //const algodConfig = getAlgodConfigEnvironment()
+  /*const algodClient = algokit.getAlgoClient({
     server: algodConfig.server,
     port: algodConfig.port,
     token: algodConfig.token,
-  })
+  })*/
 
   const { enqueueSnackbar } = useSnackbar()
 
@@ -33,7 +33,7 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
       return
     }
 
-    const suggestedParams = await algodClient.getTransactionParams().do()
+    /*const suggestedParams = await algodClient.getTransactionParams().do()
 
     const transaction = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
       from: activeAddress,
@@ -55,7 +55,7 @@ const Transact = ({ openModal, setModalState }: TransactInterface) => {
       setReceiverAddress('')
     } catch (e) {
       enqueueSnackbar('Failed to send transaction', { variant: 'error' })
-    }
+    }*/
 
     setLoading(false)
   }

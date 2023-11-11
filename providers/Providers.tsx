@@ -11,8 +11,8 @@ import {
 import { DeflyWalletConnect } from "@blockshake/defly-connect";
 import { DaffiWalletConnect } from "@daffiwallet/connect";
 import { PeraWalletConnect } from "@perawallet/connect";
-import { WalletConnectModalSign } from "@walletconnect/modal-sign-html";
-import algosdk from "algosdk";
+//import { WalletConnectModalSign } from "@walletconnect/modal-sign-html";
+//import algosdk from "algosdk";
 import { getAlgodConfigEnvironment } from "@/utils/network/getClientConfigs";
 
 let providersArray: ProvidersArray;
@@ -25,7 +25,8 @@ if (process.env.NEXT_PUBLIC_ALGOD_NETWORK === "") {
     { id: PROVIDER_ID.DAFFI, clientStatic: DaffiWalletConnect },
     {
       id: PROVIDER_ID.WALLETCONNECT,
-      clientStatic: WalletConnectModalSign,
+      //clientStatic: WalletConnectModalSign,
+      clientStatic: "",
       clientOptions: {
         projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_ID || "",
         metadata: {
@@ -45,7 +46,7 @@ if (process.env.NEXT_PUBLIC_ALGOD_NETWORK === "") {
 export default function Providers({ children }: { children: React.ReactNode }) {
   const algodConfig = getAlgodConfigEnvironment();
 
-  const walletProviders = useInitializeProviders({
+  /*const walletProviders = useInitializeProviders({
     providers: providersArray,
     nodeConfig: {
       network: algodConfig.network,
@@ -53,12 +54,14 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       nodePort: String(algodConfig.port),
       nodeToken: String(algodConfig.token),
     },
+    //algosdkStatic: algosdk,
     algosdkStatic: algosdk,
-  });
+  });*/
 
   return (
     <SnackbarProvider maxSnack={3}>
-      <WalletProvider value={walletProviders}>{children} </WalletProvider>
+      {children}
+      {/*<WalletProvider value={walletProviders}>{children}</WalletProvider>*/}
     </SnackbarProvider>
   );
 }
