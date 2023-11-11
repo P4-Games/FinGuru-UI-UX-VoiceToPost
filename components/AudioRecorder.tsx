@@ -79,15 +79,15 @@ export default function AudioRecorder({
                   body: formData,
                 }
               );
-              if (!response.ok) {
-                console.log(response);
-              }
+              const data = await response.json();
+              console.log(data);
+              if (typeof data != "string") return; 
+              let formattedData = data?.startsWith("html") ? data.replace("html", "") : data;
+              formattedData = formattedData.replace(/\n/g, "<br />");
+              callBack(formattedData);
             } catch (err) {
               console.log(err);
             }
-
-            //on success
-            callBack(exampleNote);
           });
       }
     };

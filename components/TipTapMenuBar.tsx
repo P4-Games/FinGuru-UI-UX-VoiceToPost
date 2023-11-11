@@ -1,9 +1,7 @@
 import { useCurrentEditor } from '@tiptap/react'
 import React from 'react'
 import { IconBold, IconCodeDots, IconClearFormatting, IconClearAll, IconBaselineDensityMedium, IconH1, IconH2, IconItalic, IconStrikethrough, IconH3, IconH4, IconH5,IconH6, IconList, IconBlockquote, IconArrowBackUp, IconArrowForwardUp, IconListNumbers} from '@tabler/icons-react';
-export const TiptapMenuBar = () => {
-  const { editor } = useCurrentEditor()
-
+export const TiptapMenuBar = ({editor}: {editor: any}) => {
   if (!editor) {
     return null
   }

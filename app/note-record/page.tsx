@@ -5,7 +5,7 @@ import NoteSection from "@/components/NoteSection";
 import { Navbar } from '@/components/Navbar'
 
 export default function NoteRecord() {
-  const [note, setNote] = useState("");
+  const [note, setNote] = useState<string>("");
 
   return (
     <>
