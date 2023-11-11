@@ -1,5 +1,5 @@
-import * as algokit from '@algorandfoundation/algokit-utils'
-import { TransactionSignerAccount } from '@algorandfoundation/algokit-utils/types/account'
+//import * as algokit from '@algorandfoundation/algokit-utils'
+//import { TransactionSignerAccount } from '@algorandfoundation/algokit-utils/types/account'
 //import { AppDetails } from '@algorandfoundation/algokit-utils/types/app-client'
 import { useWallet } from '@txnlab/use-wallet'
 import { useSnackbar } from 'notistack'
@@ -17,7 +17,7 @@ const AppCalls = ({ openModal, setModalState }: AppCallsInterface) => {
   const [contractInput, setContractInput] = useState<string>('')
 
   const algodConfig = getAlgodConfigEnvironment()
-  const algodClient = algokit.getAlgoClient({
+  /*const algodClient = algokit.getAlgoClient({
     server: algodConfig.server,
     port: algodConfig.port,
     token: algodConfig.token,
@@ -28,7 +28,7 @@ const AppCalls = ({ openModal, setModalState }: AppCallsInterface) => {
     server: indexerConfig.server,
     port: indexerConfig.port,
     token: indexerConfig.token,
-  })
+  })*/
 
   const { enqueueSnackbar } = useSnackbar()
   const { signer, activeAddress } = useWallet()
