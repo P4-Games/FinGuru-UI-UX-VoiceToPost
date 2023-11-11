@@ -72,6 +72,7 @@ export default function AudioRecorder({
               setMessage(
                 "The audio file size exceeds the maximum limit of 25MB."
               );
+              setLoading(false);
               return;
             }
 
@@ -89,12 +90,16 @@ export default function AudioRecorder({
                 }
               );
               const data = await response.json();
+              setLoading(false);
               console.log(data);
-              if (typeof data != "string") return; 
-              let formattedData = data?.startsWith("html") ? data.replace("html", "") : data;
+              if (typeof data != "string") return;
+              let formattedData = data?.startsWith("html")
+                ? data.replace("html", "")
+                : data;
               formattedData = formattedData.replace(/\n/g, "<br />");
               callBack(formattedData);
             } catch (err) {
+              setLoading(false);
               console.log(err);
             }
           });
