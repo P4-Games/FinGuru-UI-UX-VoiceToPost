@@ -11,6 +11,52 @@ export default function NoteSection({ note, setNote }: NoteSectionProps) {
 
   const handlePublishNote = async () => {
     // handle publish note
+    const URL = "https://www.fin.guru/wp-json/wp/v2/posts";
+    /*
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "**",
+        },
+        body: `username=${encodeURIComponent()}&password=${encodeURIComponent(password)}`,
+    };
+    */
+    // Step 2: Define the base URL for the WordPress API
+    const baseUrl = 'https://your-wordpress-site.com/wp-json';
+    
+    const title: string = (note.match(/<h1>(.*?)<\/h1>/g) || note.match(/<h2>(.*?)<\/h2>/g))?.[0] ?? "";
+
+    // Step 3: Define the post data
+    const postData = {
+      date: new Date().toISOString(),
+      slug: title?.replaceAll(" ", "-") ?? "",
+      status: 'publish',
+      title: title,
+      content: {
+        rendered: note,
+        protected: false,
+      },
+      author: 564,
+    };
+
+    const url = `${baseUrl}/wp/v2/posts`;
+
+    // Step 5: Use fetch to send a POST request to the full URL with the post data
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        
+      },
+      body: JSON.stringify(postData),
+    });
+
+    // Step 6: Parse the response as JSON
+    const data = await response.json();
+
+    // Step 7: Handle the JSON data in the response
+    console.log(data);
   };
 
   return (

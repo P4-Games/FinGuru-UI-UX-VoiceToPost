@@ -89,7 +89,7 @@ export const Navbar = () => {
           </button>
         )}
         <div>
-          <Button
+          {/*<Button
             className="bg-violet-700"
             data-test-id="connect-wallet"
             onClick={toggleWalletModal}
@@ -97,7 +97,7 @@ export const Navbar = () => {
             {activeAddress
               ? ellipseAddress(activeAddress, 4)
               : "Connect Wallet"}
-          </Button>
+          </Button>*/}
 
           {/* {activeAddress && (
             <button
@@ -124,10 +124,10 @@ export const Navbar = () => {
           <IconLogout />
         </div>
       </section>
-      <ConnectWallet
+      {/*<ConnectWallet
         openModal={openWalletModal}
         closeModal={toggleWalletModal}
-      />
+      />*/}
       {/* <Transact openModal={openDemoModal} setModalState={setOpenDemoModal} />
               <AppCalls
                 openModal={appCallsDemoModal}
