@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import encodeWAV from "audiobuffer-to-wav";
+import { IconLoader2 } from "@tabler/icons-react";
 
 const exampleNote =
   "There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Molestiae rerum optio similique excepturi, laboriosam sint, incidunt, non repellendus blanditiis fuga officia nihil aliquid! There will be a note displayed here Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium repellat, odio cum animi in eius? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum earum natus quos perspiciatis, quam nisi ipsa sint asperiores voluptates nihil deleniti. Quidem dolor numquam et possimus delectus voluptatibus placeat labore? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odit, temporibus animi aut et, sunt error dolore ab tempore totam esse iste cumque corrupti libero similique consequuntur suscipit minima, quam quos? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore saepe dolorem in veritatis debitis sapiente commodi corrupti culpa doloribus. Quidem saepe repellendus itaque sit sapiente, qui reiciendis assumenda culpa quia! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur ea unde molestias quidem doloremque aut, porro voluptates eos quas eveniet, eum inventore vitae exercitationem vel accusantium. Dolorum, maxime. Unde, nesciunt?";
@@ -15,6 +16,8 @@ export default function AudioRecorder({
   const [audioURL, setAudioURL] = useState("");
   const mediaRecorderRef = useRef<MediaRecorder | null>();
   const audioChunksRef = useRef<BlobPart[]>([]);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleStartRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -46,6 +49,10 @@ export default function AudioRecorder({
   };
 
   const handleSend = async () => {
+    setMessage(
+      "Estamos procesando tu audio, esto puede tardar hasta 4 minutos..."
+    );
+    setLoading(true);
     let blob = new Blob(audioChunksRef.current, {
       type: "audio/ogg; codecs=opus",
     });
@@ -62,7 +69,9 @@ export default function AudioRecorder({
 
             if (wavBlob.size > 26214400) {
               // Check if the size exceeds 25MB
-              alert("The audio file size exceeds the maximum limit of 25MB.");
+              setMessage(
+                "The audio file size exceeds the maximum limit of 25MB."
+              );
               return;
             }
 
@@ -79,8 +88,12 @@ export default function AudioRecorder({
                   body: formData,
                 }
               );
-              if (!response.ok) {
-                console.log(response);
+
+              if (response.ok) {
+                setMessage("");
+                setLoading(false);
+                const res = await response.json();
+                console.log(res);
               }
             } catch (err) {
               console.log(err);
@@ -129,14 +142,21 @@ export default function AudioRecorder({
             </button>
           )}
         </div>
-        {<audio src={audioURL} controls />}
+        <audio src={audioURL} controls />
         <Button
           className="text-xl px-12 py-6"
           onClick={handleSend}
-          disabled={!audioURL}
+          disabled={!audioURL || loading}
         >
-          Send
+          {loading ? (
+            <div className="animate-spin">
+              <IconLoader2 />
+            </div>
+          ) : (
+            "Enviar audio"
+          )}
         </Button>
+        {message && <p className="font-semibold">{message}</p>}
       </div>
     </section>
   );
