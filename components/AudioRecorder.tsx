@@ -9,15 +9,22 @@ const exampleNote =
 
 export default function AudioRecorder({
   callBack,
-}: {
+  loading,
+  setLoading,
+  message,
+  setMessage
+} : {
   callBack: (note: string) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  message: string;
+  setMessage: (message: string) => void;
 }) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioURL, setAudioURL] = useState("");
   const mediaRecorderRef = useRef<MediaRecorder | null>();
   const audioChunksRef = useRef<BlobPart[]>([]);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  
 
   const handleStartRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -82,7 +89,7 @@ export default function AudioRecorder({
             try {
               const response = await fetch(
                 "https://finguru-back-voicetopost-qj44in647a-uc.a.run.app" +
-                  "/convert_audio",
+                "/convert_audio",
                 {
                   method: "POST",
                   body: formData,
@@ -94,8 +101,12 @@ export default function AudioRecorder({
               let formattedData = data?.startsWith("html") ? data.replace("html", "") : data;
               formattedData = formattedData.replace(/\n/g, "<br />");
               callBack(formattedData);
+              setLoading(false);
+              setMessage("");
             } catch (err) {
               console.log(err);
+              setLoading(false);
+              setMessage("Ocurrió un error al procesar el audio");
             }
           });
       }
