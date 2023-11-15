@@ -76,6 +76,24 @@ export default function AudioRecorder({
     }
   };
 
+  const getFormatedDate = () => {
+    let date = new Date();
+    let opts: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+
+    let formattedDate = date
+      .toLocaleString("en-GB", opts)
+      .replace(/\/|\s/g, "-")
+      .replace(",", "");
+    return formattedDate;
+  };
+
   const handleSend = async () => {
     startProgress();
     setMessage(
@@ -91,6 +109,7 @@ export default function AudioRecorder({
       }
 
       const formData = new FormData();
+      // seting file with the original name
       formData.set("file", file);
       sendForm(formData);
     } else {
@@ -118,7 +137,12 @@ export default function AudioRecorder({
               }
 
               const formData = new FormData();
-              formData.append("file", wavBlob, "recorded-note.wav");
+              // seting file name with timestamp to prevent overwriting
+              formData.set(
+                "file",
+                wavBlob,
+                "recorded-note-" + getFormatedDate + ".wav"
+              );
               sendForm(formData);
             });
         }
@@ -140,10 +164,9 @@ export default function AudioRecorder({
         }
       );
       const data = await response.json();
+      console.log(data);
       setMessage("");
       setLoading(false);
-
-      console.log(data);
       if (typeof data != "string") return;
       let formattedData = data?.startsWith("html")
         ? data.replace("html", "")
