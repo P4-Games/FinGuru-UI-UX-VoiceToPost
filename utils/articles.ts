@@ -1,34 +1,36 @@
 import { Article } from "@/components/Article";
-import { getUsername } from "./login";
+import { getUserID, getUsername } from "./login";
 
 export const getUserArticles = async (name: string): Promise<Article[]> => {
     let res: Article[] = [];
 
-    const URL = "https://www.fin.guru/wp-json"
-    const POSTS_ENDPOINT = "/wp/v2/posts?per_page=50"
-    const VIEWS_ENDPOINT = "/post-views-counter/get-post-views/" //:<post_id>
+    const URL = "https://www.fin.guru";
+    const ALLPOSTS_ENDPOINT = "/custom-endpoints/posts-by-author?author_id="
+    const VIEWS_ENDPOINT = "/wp-json/post-views-counter/get-post-views/" //:<post_id>
 
-    const posts = await fetch(URL + POSTS_ENDPOINT)
+    const uid = await getUserID(name);
+
+    const posts = await fetch(URL + ALLPOSTS_ENDPOINT + uid)
         .then(res => res.json())
         .catch(err => console.log(err));
-    
-    if (posts) {
-        for (const post of posts) {
-            if (post?.yoast_head_json?.author == getUsername()){
-                const views = await fetch(URL + VIEWS_ENDPOINT + post.id)
-                    .then(res => res.json())
-                    .catch(err => console.log(err));
-                
-                res.push({
-                    title: post.title.rendered,
-                    visits: views ?? "",
-                    link: post.link
-                });
-            }
 
+    if(posts) {
+        const allPosts = posts?.posts;
+
+        for(const element of allPosts) {
+            const views = await fetch(URL + VIEWS_ENDPOINT + element.id)
+                .then(res => res.json())
+                .catch(err => console.log(err));
+
+            res.push({
+                title: element.title,
+                link: "https://www.fin.guru/?p=" + element.id,
+                visits: views,
+            });
         }
+        console.log(res)
+
     }
-    console.log(res);
     return res;
 }
 
