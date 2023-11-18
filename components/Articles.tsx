@@ -11,6 +11,8 @@ import { useWallet } from "@txnlab/use-wallet";
 import { getAlgodConfigEnvironment } from "../utils/network/getClientConfigs";
 import { useSnackbar } from "notistack";
 
+const URL = "https://finguru-back-voicetopost-qj44in647a-uc.a.run.app";
+
 export const Articles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -96,13 +98,41 @@ export const Articles = () => {
   };
 
   const claimTokens = async () => {
+    try {
+      enqueueSnackbar("Sending transaction...", { variant: "info" });
+      const body = {
+        address: "",
+        user_id: "",
+        token_amount: "",
+      };
+
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // "Accept": "*/*",
+        },
+        body: JSON.stringify(body),
+      };
+
+      const response = await fetch(URL + "/claim_tokens", options);
+      const data = await response.json();
+      console.log(data);
+    //   enqueueSnackbar(`Transaction sent: ${id}`, { variant: "success" });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("Failed to claim tokens", { variant: "error" });
+    }
+  };
+
+  const handleClaim = async () => {
     const hastOptedInAsset = await checkAssetOptIn(activeAddress);
     if (!hastOptedInAsset) {
       await optInAsset();
-      // claim tokens
+      // claimTokens();
     } else {
       console.log("claim tokens...");
-      // claim tokens
+      // claimTokens();
     }
 
     // opt-in is simply a 0 amount transfer of the asset to oneself
@@ -123,7 +153,7 @@ export const Articles = () => {
           <p>Pendiente: {tokens} $FG</p>
           <Button
             className="bg-violet-700 mt-3"
-            onClick={claimTokens}
+            onClick={handleClaim}
             disabled={!activeAddress}
           >
             {activeAddress ? "Reclamar" : "Conecta tu billetera"}
