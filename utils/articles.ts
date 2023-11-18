@@ -31,3 +31,31 @@ export const getUserArticles = async (name: string): Promise<Article[]> => {
     console.log(res);
     return res;
 }
+
+export const publishPost = async (title: string, content: string, author_id: number, categories: number): Promise<string> => {
+    //Input: Form data: "title", "content", "author_id", "categories" all as string
+    //Output: Post id as int
+    //Return: URL: "https://www.fin.guru/?p=" + post_id
+
+    let res = "https://www.fin.guru/";
+    const URL = "https://www.fin.guru/custom-endpoints/publish-post";
+    
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "*/*",
+        },
+        body: `title=${encodeURIComponent(title)}&content=${encodeURIComponent(content)}&author_id=${encodeURIComponent(author_id)}&categories=${encodeURIComponent(categories)}`,
+    };
+
+    const query = await fetch(URL, options)
+        .then(res => res.json())
+        .catch(err => console.log(err));
+
+    if (query) {
+        res += "?p=" + query.post_id;
+    }
+
+    return res;
+}

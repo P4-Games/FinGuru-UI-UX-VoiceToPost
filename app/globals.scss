@@ -90,14 +90,22 @@ button{
 
 .tiptap_form > div{
   border: 1px solid #e2e8f0;
-  padding: 8px;
-  max-width: 3xl;
   width: calc(100% - 60px);
   padding: 15px;
   border-radius: 8px;
   height: 40vh;
   overflow-y: auto;
   margin: auto 30px auto 30px;
+}
+
+.tiptap_title{
+  @extend .tiptap_form;
+  max-width: 1020px;
+  margin-left: auto;
+  margin-right: auto;
+  & > div{
+    height: fit-content;
+  }
 }
 
 .tiptap_form .is-active{

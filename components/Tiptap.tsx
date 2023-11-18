@@ -14,6 +14,7 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import { TiptapMenuBar } from "./TipTapMenuBar";
 import React, { useEffect } from "react";
+import { Input } from "./ui/input";
 
 interface TiptapProps {
   note: string;
@@ -57,9 +58,8 @@ const Tiptap = ({ note, setNote }: TiptapProps) => {
       ? ButtonClassNameExtended
       : ButtonAltClassNameExtended;
 
-  useEffect(() => {
-    editor?.commands.setContent(note);
-  }, [note]);
+  
+  
 
   return (
     <section className="max-w-[1020px] mx-auto">
@@ -82,12 +82,6 @@ const Tiptap = ({ note, setNote }: TiptapProps) => {
             className={getButtonClassName("italic")}
           >
             italic
-          </button>
-          <button
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            className={getButtonClassName("strike")}
-          >
-            strike
           </button>
         </BubbleMenuComp>
       )}
