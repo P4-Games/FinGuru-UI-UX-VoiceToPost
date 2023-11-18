@@ -141,7 +141,7 @@ export default function AudioRecorder({
               formData.set(
                 "file",
                 wavBlob,
-                "recorded-note-" + getFormatedDate + ".wav"
+                "recorded-note-" + getFormatedDate() + ".wav"
               );
               sendForm(formData);
             });
@@ -172,7 +172,7 @@ export default function AudioRecorder({
         ? data.replace("html", "")
         : data;
       formattedData = formattedData.replaceAll(/\n/g, "<br/>");
-      callBack(formattedData);
+      callBack(formattedData + " -- From Audio");
     } catch (err) {
       setMessage("Ocurrió un error al procesar el audio");
       setLoading(false);

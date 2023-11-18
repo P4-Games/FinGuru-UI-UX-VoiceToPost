@@ -58,9 +58,12 @@ const Tiptap = ({ note, setNote }: TiptapProps) => {
       ? ButtonClassNameExtended
       : ButtonAltClassNameExtended;
 
+    useEffect(() => {
+      if(note.endsWith("-- From Audio")){
+        editor?.commands.setContent(note.replaceAll("-- From Audio", "").replaceAll("\n", ""));
+      }
+    }, [editor?.commands, note]);
   
-  
-
   return (
     <section className="max-w-[1020px] mx-auto">
       <TiptapMenuBar editor={editor} />

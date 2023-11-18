@@ -9,7 +9,7 @@ interface NoteSectionProps {
   note: string;
   setNote: React.Dispatch<React.SetStateAction<string>>;
 }
-export default function NoteSection({ note, setNote }: Readonly<NoteSectionProps>) {
+export default function NoteSection({ note, setNote }: NoteSectionProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [categories, setCategories] = useState<[number, string][]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
