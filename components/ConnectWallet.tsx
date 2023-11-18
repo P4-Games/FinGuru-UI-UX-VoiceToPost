@@ -10,7 +10,6 @@ interface ConnectWalletInterface {
 
 const ConnectWallet = ({ openModal, closeModal }: ConnectWalletInterface) => {
   const { providers, activeAddress } = useWallet();
-
   const isKmd = (provider: Provider) =>
     provider.metadata.name.toLowerCase() === "kmd";
 

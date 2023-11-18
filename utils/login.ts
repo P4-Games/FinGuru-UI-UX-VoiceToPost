@@ -22,6 +22,24 @@ export const getUsername = (): string => {
     return localStorage.getItem("username") ?? "";
 }
 
+export const getUserID = async (username: string): Promise<number> => {
+    const URL = "https://www.fin.guru/custom-endpoints/authors-by-name?name=";
+
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "*/*",
+        },
+    };
+
+    const query = fetch(URL + username, options);
+
+    const data = await (await query).json();
+
+    return data?.author_id ?? 0;
+}
+
 type LoginResponse = {
     token_type: string,
     iat: number,
