@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex flex-col items-start justify-between p-6 gap-3">
+      <main className="flex flex-col items-start justify-between p-6 gap-3 max-w-7xl mx-auto w-full">
         <h1 className='text-3xl font-bold'>
           Mis artículos
         </h1>
