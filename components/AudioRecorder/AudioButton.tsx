@@ -61,7 +61,7 @@ export default function AudioButton({ audioURL, setAudioURL, mediaRecorderRef, a
 
         mediaRecorderRef.current.addEventListener("stop", () => {
             const blob = new Blob(audioChunksRef.current, {
-                type: "audio/ogg; codecs=opus",
+                type: "audio/webm;codecs=opus",
             });
             const url = URL.createObjectURL(blob);
             setAudioURL(url);

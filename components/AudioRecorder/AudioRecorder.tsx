@@ -85,7 +85,7 @@ export default function AudioRecorder({
       sendForm(formData);
     } else {
       let blob = new Blob(audioChunksRef.current, {
-        type: "audio/ogg; codecs=opus",
+        type: "audio/webm; codecs=opus",
       });
       let reader = new FileReader();
       reader.onload = function (event) {

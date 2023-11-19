@@ -164,7 +164,7 @@ export const Articles = () => {
           height={80}
         />
       </section>
-      <section>
+      <section className="flex flex-col w-full gap-6">
         {!isLoading
           ? articles.map((article, index) => (
               <Article key={index} {...article} />
