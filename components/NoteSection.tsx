@@ -45,7 +45,7 @@ export default function NoteSection({ note, setNote }: Readonly<NoteSectionProps
       } else {
         const noteTags = note.split("<"); 
         if (noteTags.length > 0) {
-          res = noteTags[1].split(">")[1].split("</")[0];
+          res = note.split("<h1>")[1].split("</h1>")[0];
         }
       }
     }
