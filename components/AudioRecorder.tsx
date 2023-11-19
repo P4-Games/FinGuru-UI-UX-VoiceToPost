@@ -3,6 +3,7 @@ import { useEffect, useState, useRef, ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import encodeWAV from "audiobuffer-to-wav";
 import { IconLoader2 } from "@tabler/icons-react";
+import { isiOS } from "@tiptap/react";
 
 const maxWidth = 100 / (5 * 60);
 
@@ -19,6 +20,7 @@ export default function AudioRecorder({
   const [loading, setLoading] = useState<boolean>(false);
   const [barWidth, setBarWidth] = useState(0);
   const [file, setFile] = useState<File | null>(null);
+  const [isIOS, setIsIOS] = useState<boolean>(false);
 
   const startProgress = () => {
     let timer = setInterval(() => {
@@ -42,6 +44,10 @@ export default function AudioRecorder({
     setBarWidth(0);
   }, [loading]);
 
+  useEffect(() => {
+    setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent));
+  }, []);
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     setFile(e.target.files[0]);
@@ -49,14 +55,14 @@ export default function AudioRecorder({
 
   const handleStartRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorderRef.current = new MediaRecorder(stream, {mimeType: 'audio/webm'});
+    mediaRecorderRef.current = new MediaRecorder(stream);
     mediaRecorderRef.current.addEventListener("dataavailable", (e) => {
       audioChunksRef.current.push(e.data);
     });
 
     mediaRecorderRef.current.addEventListener("stop", () => {
       const blob = new Blob(audioChunksRef.current, {
-        type: "audio/webm",
+        type: "audio/ogg; codecs=opus",
       });
       const url = URL.createObjectURL(blob);
       setAudioURL(url);
@@ -114,7 +120,7 @@ export default function AudioRecorder({
       sendForm(formData);
     } else {
       let blob = new Blob(audioChunksRef.current, {
-        type: "audio/webm",
+        type: "audio/ogg; codecs=opus",
       });
       let reader = new FileReader();
       reader.onload = function (event) {
@@ -216,7 +222,32 @@ export default function AudioRecorder({
             </button>
           )}
         </div>
-        <audio autoPlay={false} src={audioURL} controls />
+        {isIOS && audioURL && (
+          <button
+            onClick={() => {
+              const audio = new Audio(audioURL);
+              audio.play();
+            }}
+            className="mx-auto flex items-center justify-center bg-green-400 hover:bg-green-500 rounded-full w-20 h-20 focus:outline-none"
+          >
+            <svg
+              className="h-12 w-12"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill="white"
+                d="M9 18V6l12 6-12 6z"
+              />
+            </svg>
+          </button>
+        )}
+
+        {
+          !isiOS && audioURL && (
+            <audio src={audioURL} controls />
+          )
+        }
         <div className="my-6 text-center">
           <label
             className="block font-medium text-2xl mb-4"
