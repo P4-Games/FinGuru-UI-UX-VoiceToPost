@@ -63,7 +63,7 @@ export default function NoteSection({ note, setNote }: NoteSectionProps) {
     const uid = await getUserID(getUsername());
     console.log(uid)
 
-    const url = await publishPost(getNoteTitle(), note, uid, selectedCategory);
+    const url = await publishPost(getNoteTitle(), note.replace("<h1>" + getNoteTitle() + "</h1>", ""), uid, selectedCategory);
 
     setLoading(false);
     window.open(url, "_blank");

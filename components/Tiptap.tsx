@@ -60,9 +60,14 @@ const Tiptap = ({ note, setNote }: TiptapProps) => {
 
     useEffect(() => {
       if(note.endsWith("-- From Audio")){
-        editor?.commands.setContent(note.replaceAll("-- From Audio", "").replaceAll("\n", ""));
+        
+        let modifiedNote = note.replaceAll("-- From Audio", "").replaceAll("<br/>", "").split("</section>").join("</section><br/>");
+        
+        console.log("N:",  modifiedNote)
+        editor?.commands.setContent(modifiedNote);
+        setNote(modifiedNote);
       }
-    }, [editor?.commands, note]);
+    }, [editor?.commands, note, setNote]);
   
   return (
     <section className="max-w-[1020px] mx-auto">
