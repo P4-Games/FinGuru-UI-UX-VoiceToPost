@@ -49,14 +49,14 @@ export default function AudioRecorder({
 
   const handleStartRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorderRef.current = new MediaRecorder(stream);
+    mediaRecorderRef.current = new MediaRecorder(stream, {mimeType: 'audio/webm'});
     mediaRecorderRef.current.addEventListener("dataavailable", (e) => {
       audioChunksRef.current.push(e.data);
     });
 
     mediaRecorderRef.current.addEventListener("stop", () => {
       const blob = new Blob(audioChunksRef.current, {
-        type: "audio/ogg; codecs=opus",
+        type: "audio/webm",
       });
       const url = URL.createObjectURL(blob);
       setAudioURL(url);
@@ -114,7 +114,7 @@ export default function AudioRecorder({
       sendForm(formData);
     } else {
       let blob = new Blob(audioChunksRef.current, {
-        type: "audio/ogg; codecs=opus",
+        type: "audio/webm",
       });
       let reader = new FileReader();
       reader.onload = function (event) {
@@ -216,8 +216,7 @@ export default function AudioRecorder({
             </button>
           )}
         </div>
-
-        <audio src={audioURL} controls />
+        <audio autoPlay={false} src={audioURL} controls />
         <div className="my-6 text-center">
           <label
             className="block font-medium text-2xl mb-4"
