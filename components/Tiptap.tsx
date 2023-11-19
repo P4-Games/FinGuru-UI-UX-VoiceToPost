@@ -4,8 +4,7 @@ import BubbleMenu from "@tiptap/extension-bubble-menu";
 import {
   useEditor,
   EditorContent,
-  BubbleMenu as BubbleMenuComp,
-  EditorProvider,
+  BubbleMenu as BubbleMenuComp
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { ButtonAltClassName, ButtonClassName } from "./Article";
@@ -14,7 +13,6 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import { TiptapMenuBar } from "./TipTapMenuBar";
 import React, { useEffect } from "react";
-import { Input } from "./ui/input";
 
 interface TiptapProps {
   note: string;

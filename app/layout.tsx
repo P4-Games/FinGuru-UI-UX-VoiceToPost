@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${inter.className} min-h-screen flex flex-col items-center`}
+        className={`${inter.className} min-h-screen flex flex-col`}
       >
         <SkeletonTheme baseColor="#eee" highlightColor="rgb(109, 40, 217, 0.1)">
           <Providers>{children}</Providers>
