@@ -135,7 +135,6 @@ export default function AudioRecorder({
         }
       );
       const data = await response.json();
-      console.log(data);
       setMessage("");
       setLoading(false);
       if (typeof data != "string") return;
@@ -143,6 +142,7 @@ export default function AudioRecorder({
         ? data.replace("html", "")
         : data;
       formattedData = formattedData.replaceAll(/\n/g, "<br/>");
+      console.log(formattedData + " -- From Audio"); 
       callBack(formattedData + " -- From Audio");
     } catch (err) {
       setMessage("Ocurrió un error al procesar el audio");
@@ -154,8 +154,6 @@ export default function AudioRecorder({
   return (
     <section className="flex items-center justify-center w-full">
       <div className="flex flex-col items-center gap-4 m-8 h-full">
-        
-        
         <AnimatePresence>
           {
             !file ? <motion.div

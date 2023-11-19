@@ -57,18 +57,17 @@ const Tiptap = ({ note, setNote }: TiptapProps) => {
       : ButtonAltClassNameExtended;
 
     useEffect(() => {
-      if(note.endsWith("-- From Audio")){
+      console.log(note)
+      if(note.includes("-- From Audio") && editor?.commands){
         
-        let modifiedNote = note.replaceAll("-- From Audio", "").replaceAll("<br/>", "").split("</section>").join("</section><br/>");
-        
-        console.log("N:",  modifiedNote)
+        let modifiedNote = note.replace("-- From Audio", "").replaceAll("<br/>", "").split("</section>").join("</section><br/>");
         editor?.commands.setContent(modifiedNote);
         setNote(modifiedNote);
       }
     }, [editor?.commands, note, setNote]);
   
   return (
-    <section className="max-w-[1020px] mx-auto">
+    <section className="max-w-[1020px] mx-auto mt-12">
       <TiptapMenuBar editor={editor} />
       <EditorContent className="tiptap_form" editor={editor} />
       {editor && (
