@@ -93,7 +93,7 @@ export default function NoteSection({ note, setNote }: NoteSectionProps) {
       </div>
       <div className="flex justify-center">
         <Button
-          className="text-xl px-12 py-6"
+          className="text-xl px-12 py-8"
           onClick={handlePublishNote}
           disabled={!note || loading}
         >
