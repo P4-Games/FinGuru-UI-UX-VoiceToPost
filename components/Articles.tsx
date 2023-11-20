@@ -64,6 +64,7 @@ export const Articles = () => {
   };
 
   const optInAsset = async () => {
+    // opt-in is simply a 0 amount transfer of the asset to oneself
     if (activeAddress && process.env.NEXT_PUBLIC_ASSET_ID) {
       const suggestedParams = await algodClient.getTransactionParams().do();
 
@@ -94,6 +95,8 @@ export const Articles = () => {
       } catch (e) {
         enqueueSnackbar("Failed to send transaction", { variant: "error" });
       }
+    } else {
+      console.log("Pls connect wallet...");
     }
   };
 
@@ -118,7 +121,7 @@ export const Articles = () => {
       const response = await fetch(URL + "/claim_tokens", options);
       const data = await response.json();
       console.log(data);
-    //   enqueueSnackbar(`Transaction sent: ${id}`, { variant: "success" });
+      //   enqueueSnackbar(`Transaction sent: ${id}`, { variant: "success" });
     } catch (error) {
       console.log(error);
       enqueueSnackbar("Failed to claim tokens", { variant: "error" });
@@ -135,7 +138,6 @@ export const Articles = () => {
       // claimTokens();
     }
 
-    // opt-in is simply a 0 amount transfer of the asset to oneself
     // const signedOptInTxn = optInTxn.signTxn(receiver.privateKey);
     // await algodClient.sendRawTransaction(signedOptInTxn).do();
     // await algosdk.waitForConfirmation(
@@ -151,11 +153,17 @@ export const Articles = () => {
         <div className="flex flex-col gap-2">
           <h3 className="text-xl m-0 font-medium">Reclamar tokens</h3>
           <p>Pendiente: {tokens} $NEWS</p>
-          <Button  
-            className='bg-violet-700 mt-3' 
+          <Button
+            className="bg-violet-700 mt-3"
             onClick={handleClaim}
             disabled={tokens < 300}
-          >{tokens < 300 ? "Min. 300 NEWS" : (activeAddress ? "Reclamar" : "Conecta tu billetera")}</Button>
+          >
+            {tokens < 300
+              ? "Min. 300 NEWS"
+              : activeAddress
+              ? "Reclamar"
+              : "Conecta tu billetera"}
+          </Button>
         </div>
         <Image
           src="/finguru_token.png"

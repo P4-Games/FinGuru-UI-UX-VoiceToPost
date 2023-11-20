@@ -29,7 +29,7 @@ export default function Page (){
     }, [router])
 
     return (
-        <main className="flex flex-col items-center">
+        <main className="flex flex-col items-center mx-auto max-w-4xl">
             <section className="flex flex-col items-left sm:items-center justify-center h-[100vh] p-6 sm:p-24 gap-12 w-full sm:w-full">
                 <h1 className='text-4xl sm:text-6xl font-bold text-left sm:text-center'>
                     Ingresar

@@ -121,7 +121,7 @@ export const Navbar = () => {
                   <div className="flex flex-shrink-0 items-center">
                     <Image
                       className="h-8 w-auto"
-                      src="/finguru_token.png"
+                      src="/logo_fin.png"
                       alt="Your Company"
                       width={50}
                       height={50}
