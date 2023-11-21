@@ -130,18 +130,22 @@ export default function AudioButton({
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const audioRef = useRef<any>();
 
-  useEffect(() => {
-    // dynamically import audio-recorder because it uses window object
-    const loadRecorder = async () => {
-      const AudioRecorder = (await import("audio-recorder-polyfill")).default;
-      if (typeof window !== "undefined") {
-        window.MediaRecorder = AudioRecorder;
-      }
-    };
-    loadRecorder();
-  }, []);
+  // useEffect(() => {
+  //   // dynamically import audio-recorder because it uses window object
+
+  //   loadRecorder();
+  // }, []);
+
+  const loadRecorder = async () => {
+    const AudioRecorder = (await import("audio-recorder-polyfill")).default;
+    if (typeof window !== "undefined") {
+      window.MediaRecorder = AudioRecorder;
+      console.log(window.MediaRecorder);
+    }
+  };
 
   const handleStartRecording = async () => {
+    await loadRecorder();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorderRef.current = new MediaRecorder(stream);
     mediaRecorderRef.current.addEventListener("dataavailable", (e) => {
@@ -172,10 +176,8 @@ export default function AudioButton({
 
   const handlePlay = () => {
     if (isPlaying) {
-      console.log("Pause");
       audioRef.current.pause();
     } else {
-      console.log("Play");
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);

@@ -65,6 +65,7 @@ export const Articles = () => {
   };
 
   const optInAsset = async () => {
+    // account needs a min amount of Algo to opt-in the asset successfully
     // opt-in is simply a 0 amount transfer of the asset to oneself
     if (activeAddress && process.env.NEXT_PUBLIC_ASSET_ID) {
       const suggestedParams = await algodClient.getTransactionParams().do();
@@ -104,13 +105,14 @@ export const Articles = () => {
   const claimTokens = async () => {
     try {
       enqueueSnackbar("Sending transaction...", { variant: "info" });
-      // testing body
+
+      // test body
       const body = {
-        address_to_send: activeAddress,
-        tokenAmount: 100,
+        id: 21, // finguru user id
+        address: activeAddress, // algo address
+        viewsAmount: 800000, // token claim amount
       };
 
-      console.log(body);
       const options = {
         method: "POST",
         headers: {
@@ -120,7 +122,7 @@ export const Articles = () => {
         body: JSON.stringify(body),
       };
 
-      const response = await fetch(URL + "/transfer_tokens", options);
+      const response = await fetch(URL + "/views", options);
       const data = await response.json();
       console.log(data);
       //   enqueueSnackbar(`Transaction sent: ${id}`, { variant: "success" });
@@ -149,13 +151,19 @@ export const Articles = () => {
           <Button
             className="bg-violet-700 mt-3"
             onClick={handleClaim}
-            disabled={tokens < 300}
+            disabled={
+              // tokens < 300
+              false
+            }
           >
-            {tokens < 300
-              ? "Min. 300 NEWS"
-              : activeAddress
-              ? "Reclamar"
-              : "Conecta tu billetera"}
+            {
+              // tokens < 300
+              false
+                ? "Min. 300 NEWS"
+                : activeAddress
+                ? "Reclamar"
+                : "Conecta tu billetera"
+            }
           </Button>
         </div>
         <Image
