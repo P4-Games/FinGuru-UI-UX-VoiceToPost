@@ -1,7 +1,6 @@
+"use client";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./AudioRecorder.module.scss";
-import AudioRecorder from "audio-recorder-polyfill";
-window.MediaRecorder = AudioRecorder;
 
 interface AudioButtonProps {
   audioURL: string;
@@ -130,6 +129,17 @@ export default function AudioButton({
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const audioRef = useRef<any>();
+
+  useEffect(() => {
+    // dynamically import audio-recorder because it uses window object
+    const loadRecorder = async () => {
+      const AudioRecorder = (await import("audio-recorder-polyfill")).default;
+      if (typeof window !== "undefined") {
+        window.MediaRecorder = AudioRecorder;
+      }
+    };
+    loadRecorder();
+  }, []);
 
   const handleStartRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });

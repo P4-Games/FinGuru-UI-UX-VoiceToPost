@@ -39,6 +39,7 @@ export const Articles = () => {
       setLoadingWidth(window.innerWidth - 60);
     }
   }, []);
+
   useEffect(() => {
     if (articles.length > 0) {
       setTokens(
@@ -103,12 +104,13 @@ export const Articles = () => {
   const claimTokens = async () => {
     try {
       enqueueSnackbar("Sending transaction...", { variant: "info" });
+      // testing body
       const body = {
-        address: "",
-        user_id: "",
-        token_amount: "",
+        address_to_send: activeAddress,
+        tokenAmount: 100,
       };
 
+      console.log(body);
       const options = {
         method: "POST",
         headers: {
@@ -118,7 +120,7 @@ export const Articles = () => {
         body: JSON.stringify(body),
       };
 
-      const response = await fetch(URL + "/claim_tokens", options);
+      const response = await fetch(URL + "/transfer_tokens", options);
       const data = await response.json();
       console.log(data);
       //   enqueueSnackbar(`Transaction sent: ${id}`, { variant: "success" });
@@ -132,19 +134,10 @@ export const Articles = () => {
     const hastOptedInAsset = await checkAssetOptIn(activeAddress);
     if (!hastOptedInAsset) {
       await optInAsset();
-      // claimTokens();
+      await claimTokens();
     } else {
-      console.log("claim tokens...");
-      // claimTokens();
+      await claimTokens();
     }
-
-    // const signedOptInTxn = optInTxn.signTxn(receiver.privateKey);
-    // await algodClient.sendRawTransaction(signedOptInTxn).do();
-    // await algosdk.waitForConfirmation(
-    //   algodClient,
-    //   optInTxn.txID().toString(),
-    //   3
-    // );
   };
 
   return (
