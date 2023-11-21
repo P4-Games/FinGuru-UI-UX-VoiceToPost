@@ -1,0 +1,62 @@
+.audioButton{
+    border-radius: 999px;
+    background: #F4F4F4;
+    box-shadow: 9px 9px 23px 0px rgba(173, 173, 173, 0.90) inset, -9px -9px 18px 0px rgba(255, 255, 255, 0.90) inset, 9px -9px 18px 0px rgba(173, 173, 173, 0.20) inset, -9px 9px 18px 0px rgba(173, 173, 173, 0.20) inset, -1px -1px 2px 0px rgba(173, 173, 173, 0.50), 1px 1px 2px 0px rgba(255, 255, 255, 0.30);
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    & > div{
+        border-radius: 999px;
+        background: linear-gradient(135deg, #FFF 0%, #EDEDED 100%);
+        box-shadow: 29px 29px 73px 0px rgba(204, 204, 204, 0.90), -29px -29px 58px 0px rgba(255, 255, 255, 0.90), 29px -29px 58px 0px rgba(204, 204, 204, 0.20), -29px 29px 58px 0px rgba(204, 204, 204, 0.20), -1px -1px 2px 0px rgba(204, 204, 204, 0.50) inset, 1px 1px 2px 0px rgba(255, 255, 255, 0.30) inset;
+        width: 150px;
+        height: 150px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        transition: all 1s linear;
+        outline: none;
+        border: none;
+
+        &:hover{
+            cursor: pointer;
+            transform: scale(0.97);
+            transition: all 0.2s cubic-bezier(0.6, 0.6, 0, 1);
+        }
+        
+        &:active{
+            outline: none;
+            transform: scale(0.95);
+            transition: all 0.2s cubic-bezier(0.6, 0.6, 0, 1);
+        }
+    }
+
+    &Active{
+        @extend .audioButton;
+
+        & > div{
+            background: linear-gradient(135deg, #FF5D63 0%, #F25559 100%);
+            box-shadow: 29px 29px 73px 0px rgba(207, 74, 78, 0.90), -29px -29px 58px 0px rgba(255, 104, 110, 0.90), 29px -29px 58px 0px rgba(207, 74, 78, 0.20), -29px 29px 58px 0px rgba(207, 74, 78, 0.20), -1px -1px 2px 0px rgba(207, 74, 78, 0.50) inset, 1px 1px 2px 0px rgba(255, 104, 110, 0.30) inset;
+            transition: all 1s linear;
+        }
+    }
+
+    &Playing{
+        @extend .audioButton;
+
+        & > div{
+            background: linear-gradient(135deg, #722AE4 0%, #6826CE 100%);
+            box-shadow: 29px 29px 73px 0px rgba(90, 33, 180, 0.90), -29px -29px 58px 0px rgba(128, 47, 254, 0.90), 29px -29px 58px 0px rgba(90, 33, 180, 0.20), -29px 29px 58px 0px rgba(90, 33, 180, 0.20), -1px -1px 2px 0px rgba(90, 33, 180, 0.50) inset, 1px 1px 2px 0px rgba(128, 47, 254, 0.30) inset;
+            transition: all 1s linear;
+        }
+    }
+}
+
+

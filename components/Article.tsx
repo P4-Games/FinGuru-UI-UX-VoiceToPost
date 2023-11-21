@@ -22,7 +22,9 @@ export const Article = ({title, visits, link}: ArticleProps) => {
             <h3 className='text-xl m-0 font-medium'>{title}</h3>
             <p>Visitas: {visits}</p>
             <div className='flex flex-row gap-2 w-full'>
-                <Button className={ButtonClassName}>Ver Articulo <IconNewspaper /></Button>
+                <Button className={ButtonClassName} onClick={()=>{
+                    window.open(link, '_blank')
+                }}>Ver Articulo <IconNewspaper /></Button>
                 <Button className={ButtonAltClassName}>Promocionar <IconRocket /></Button>
             </div>
         </section>

@@ -29,12 +29,12 @@ export default function Page (){
     }, [router])
 
     return (
-        <main className="flex flex-col items-center">
-            <section className="flex flex-col items-left sm:items-center justify-center h-[100vh] p-6 sm:p-24 gap-12 w-full sm:w-1/2">
+        <main className="flex flex-col items-center mx-auto max-w-4xl">
+            <section className="flex flex-col items-left sm:items-center justify-center h-[100vh] p-6 sm:p-24 gap-12 w-full sm:w-full">
                 <h1 className='text-4xl sm:text-6xl font-bold text-left sm:text-center'>
-                    Ingresar o crear cuenta
+                    Ingresar
                 </h1>
-                <p className='sm:w-[50%] w-[100%] text-left sm:text-center text-xl'>
+                <p className='sm:w-[100%] w-[100%] text-left sm:text-center text-xl'>
                     Ingrese su nombre y contraseña de <a href="https://www.fin.guru/">fin.guru</a>
                 </p>
                 <form onSubmit={(e) => handleSubmit(e)} method="POST" encType="multipart/form-data" className="flex flex-col items-center justify-center w-full gap-6">

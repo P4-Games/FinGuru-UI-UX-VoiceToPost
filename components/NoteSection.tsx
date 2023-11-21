@@ -1,77 +1,109 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Tiptap from "./Tiptap";
 import { IconLoader2 } from "@tabler/icons-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { getUserID, getUsername } from "@/utils/login";
+import { publishPost } from "@/utils/articles";
 interface NoteSectionProps {
   note: string;
   setNote: React.Dispatch<React.SetStateAction<string>>;
 }
-export default function NoteSection({ note, setNote }: NoteSectionProps) {
-  const [loading, setLoading] = useState(false);
+export default function NoteSection({ note, setNote }: Readonly<NoteSectionProps>) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [categories, setCategories] = useState<[number, string][]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number>(0);
+
+  const getCategories = async () => {
+    const URL = "https://www.fin.guru/custom-endpoints/categories";
+
+    const response = await fetch(URL);
+
+    if (response.ok) {
+      const { categories } = await response.json();
+      if(categories) {
+        let newCategories = categories.map((category: {
+          name: string;
+          id: number;
+        }) => {
+          return [category.id, category.name];
+        });
+
+        setCategories(newCategories);
+      }
+    }
+  };
+
+  const getNoteTitle = (): string => {
+    let res = "";
+    //Note could be a string or an HTML string
+    //Get the title from the first line of the note or from the text content of the first tag
+    if (note) {
+      const noteLines = note.split("</");
+      if (noteLines.length == 0) {
+        res = noteLines[0];
+      } else {
+        const noteTags = note.split("<"); 
+        if (noteTags.length > 0) {
+          res = note.split("<h1>")[1].split("</h1>")[0];
+        }
+      }
+    }
+
+    return res;
+  }
 
   const handlePublishNote = async () => {
     // handle publish note
-    const URL = "https://www.fin.guru/wp-json/wp/v2/posts";
-    /*
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Accept": "**",
-        },
-        body: `username=${encodeURIComponent()}&password=${encodeURIComponent(password)}`,
-    };
-    */
-    // Step 2: Define the base URL for the WordPress API
-    const baseUrl = 'https://your-wordpress-site.com/wp-json';
-    
-    const title: string = (note.match(/<h1>(.*?)<\/h1>/g) || note.match(/<h2>(.*?)<\/h2>/g))?.[0] ?? "";
+    setLoading(true);
+    console.log(getNoteTitle());
+    console.log(note);
+    console.log(selectedCategory);
 
-    // Step 3: Define the post data
-    const postData = {
-      date: new Date().toISOString(),
-      slug: title?.replaceAll(" ", "-") ?? "",
-      status: 'publish',
-      title: title,
-      content: {
-        rendered: note,
-        protected: false,
-      },
-      author: 564,
-    };
+    const uid = await getUserID(getUsername());
+    console.log(uid)
 
-    const url = `${baseUrl}/wp/v2/posts`;
+    const url = await publishPost(getNoteTitle(), note.replace("<h1>" + getNoteTitle() + "</h1>", ""), uid, selectedCategory);
 
-    // Step 5: Use fetch to send a POST request to the full URL with the post data
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        
-      },
-      body: JSON.stringify(postData),
-    });
-
-    // Step 6: Parse the response as JSON
-    const data = await response.json();
-
-    // Step 7: Handle the JSON data in the response
-    console.log(data);
+    setLoading(false);
+    window.open(url, "_blank");
   };
+
+  useEffect(() => {
+    getCategories();
+  }, [])
 
   return (
     <section className="flex flex-col gap-6 w-full justify-center align-middle">
       <Tiptap note={note} setNote={setNote} />
+      <div className="flex flex-row justify-center items-center gap-6">
+        Categoría:
+        <Select onValueChange={(value) => setSelectedCategory(parseInt(value))}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Categoría" />
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((category) => (
+              <SelectItem key={category[0]} value={category[0].toString()}>
+                {category[1]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <div className="flex justify-center">
         <Button
-          className="text-xl px-12 py-6"
+          className="text-xl px-12 py-8"
           onClick={handlePublishNote}
           disabled={!note || loading}
         >
           {loading ? (
-            <div className="animate-spin">
-              <IconLoader2 />
-            </div>
+            <>
+              Publicando
+              <div className="animate-spin ml-2">
+                <IconLoader2 />
+              </div>
+            </>
           ) : (
             "Publicar Nota"
           )}
