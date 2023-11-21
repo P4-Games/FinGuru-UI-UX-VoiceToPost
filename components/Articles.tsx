@@ -58,7 +58,7 @@ export const Articles = () => {
       const accountInfo = await algodClient.accountInformation(address).do();
       if (accountInfo) {
         const asset = accountInfo.assets.find(
-          (asset: any) => asset["asset-id"] == process.env.NEXT_PUBLIC_ASSET_ID
+          (asset: any) => (asset["asset-id"] == 481109569 || asset["asset-id"] == "481109569")
         );
         if (asset) return true;
       }
@@ -68,7 +68,7 @@ export const Articles = () => {
 
   const optInAsset = async () => {
     // opt-in is simply a 0 amount transfer of the asset to oneself
-    if (activeAddress && process.env.NEXT_PUBLIC_ASSET_ID) {
+    if (activeAddress) {
       const suggestedParams = await algodClient.getTransactionParams().do();
 
       // has to be of type asset transfer also for future transactions you can just change the amount
@@ -77,7 +77,7 @@ export const Articles = () => {
           from: activeAddress,
           to: activeAddress,
           suggestedParams,
-          assetIndex: parseInt(process.env.NEXT_PUBLIC_ASSET_ID),
+          assetIndex: 481109569,
           amount: 0,
         });
 
